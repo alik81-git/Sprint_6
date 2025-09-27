@@ -38,17 +38,17 @@ class MainPage(BasePage):
         self.driver.get(self.base_url)
     
     def click_question(self, question_index):
-        """Клик на вопрос по индексу"""
+        #Клик на вопрос по индексу
         locator = self.QUESTION_LOCATORS[question_index]
         self.click_element(locator)
     
     def get_answer_text(self, answer_index):
-        """Получить текст ответа по индексу"""
+        #Получить текст ответа по индексу
         locator = self.ANSWER_LOCATORS[answer_index]
         return self.find_element(locator).text
     
     def is_answer_displayed(self, answer_index):
-        """Проверить, отображается ли ответ"""
+        #Проверить, отображается ли ответ
         locator = self.ANSWER_LOCATORS[answer_index]
         try:
             return self.find_element(locator).is_displayed()
@@ -56,22 +56,26 @@ class MainPage(BasePage):
             return False
     
     def click_order_button_top(self):
-        """Клик на верхнюю кнопку заказа"""
+        #Клик на верхнюю кнопку заказа
         self.click_element(self.ORDER_BUTTON_TOP)
     
     def click_order_button_bottom(self):
-        """Клик на нижнюю кнопку заказа"""
+        #Клик на нижнюю кнопку заказа
         self.click_element(self.ORDER_BUTTON_BOTTOM)
     
     def click_scooter_logo(self):
-        """Клик на логотип Самоката"""
+        #Клик на логотип Самоката
         self.click_element(self.SCOOTER_LOGO)
     
     def click_yandex_logo(self):
-        """Клик на логотип Яндекса"""
+        #Клик на логотип Яндекса
         self.click_element(self.YANDEX_LOGO)
     
     def scroll_to_questions(self):
-        """Прокрутить к разделу с вопросами"""
+        #Прокрутить к разделу с вопросами
         questions_section = self.find_element((By.ID, "accordion__heading-0"))
         self.driver.execute_script("arguments[0].scrollIntoView();", questions_section)
+        
+    def scroll_to_bottom_order_button(self):
+        #Прокрутить к нижней кнопке заказа
+        self.scroll_to_element(self.ORDER_BUTTON_BOTTOM)

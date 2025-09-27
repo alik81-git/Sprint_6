@@ -2,10 +2,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+# Глобальная переменная с базовым URL
+BASE_URL = "https://qa-scooter.praktikum-services.ru/"
+
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
-        self.base_url = "https://qa-scooter.praktikum-services.ru/"
+        self.base_url = BASE_URL
     
     def find_element(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(
@@ -41,3 +44,12 @@ class BasePage:
     
     def get_current_url(self):
         return self.driver.current_url
+    
+    def scroll_to_element(self, locator):
+        #Прокрутить к элементу
+        element = self.find_element(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+    
+    def scroll_to_bottom(self):
+        #Прокрутить вниз страницы
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")

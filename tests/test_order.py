@@ -1,9 +1,11 @@
 import pytest
 import allure
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 class TestOrder:
+    # Глобальные переменные
+    MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/"
+    
     # Тестовые данные
     ORDER_DATA = [
         # Первый набор данных
@@ -46,7 +48,7 @@ class TestOrder:
     @pytest.mark.parametrize("order_data", ORDER_DATA)
     def test_order_through_bottom_button_success(self, main_page, order_page, order_data):
         with allure.step("Прокрутить к нижней кнопке 'Заказать'"):
-            main_page.driver.execute_script("window.scrollTo(0, 2700)")
+            main_page.scroll_to_bottom_order_button()
         
         with allure.step("Кликнуть на нижнюю кнопку 'Заказать'"):
             main_page.click_order_button_bottom()
@@ -89,7 +91,7 @@ class TestOrder:
         
         with allure.step("Проверить URL текущей страницы"):
             current_url = main_page.get_current_url()
-            assert current_url == "https://qa-scooter.praktikum-services.ru/", \
+            assert current_url == self.MAIN_PAGE_URL, \
                 f"Ожидался переход на главную страницу, но текущий URL: {current_url}"
     
     @allure.feature("Навигация")
@@ -105,6 +107,7 @@ class TestOrder:
             main_page.switch_to_new_window()
         
         with allure.step("Проверить, что открылась страница Дзен"):
+            # Используем WebDriverWait для ожидания загрузки URL
             WebDriverWait(main_page.driver, 10).until(
                 lambda driver: "dzen.ru" in driver.current_url
             )
@@ -115,4 +118,4 @@ class TestOrder:
         
         with allure.step("Закрыть новое окно и вернуться к основному"):
             main_page.driver.close()
-            main_page.switch_to_main_window()
+            main_page.driver.switch_to.window(main_window)
