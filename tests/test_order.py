@@ -1,11 +1,8 @@
 import pytest
 import allure
-from selenium.webdriver.support.wait import WebDriverWait
+from config import BASE_URL
 
 class TestOrder:
-    # Глобальные переменные
-    MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/"
-    
     # Тестовые данные
     ORDER_DATA = [
         # Первый набор данных
@@ -90,9 +87,8 @@ class TestOrder:
             main_page.click_scooter_logo()
         
         with allure.step("Проверить URL текущей страницы"):
-            current_url = main_page.get_current_url()
-            assert current_url == self.MAIN_PAGE_URL, \
-                f"Ожидался переход на главную страницу, но текущий URL: {current_url}"
+            assert main_page.is_main_page_loaded(), \
+                f"Ожидался переход на главную страницу, но текущий URL: {main_page.get_current_url()}"
     
     @allure.feature("Навигация")
     @allure.story("Переход на Дзен через логотип Яндекса")
@@ -107,14 +103,8 @@ class TestOrder:
             main_page.switch_to_new_window()
         
         with allure.step("Проверить, что открылась страница Дзен"):
-            # Используем WebDriverWait для ожидания загрузки URL
-            WebDriverWait(main_page.driver, 10).until(
-                lambda driver: "dzen.ru" in driver.current_url
-            )
-            
-            current_url = main_page.get_current_url()
-            assert "dzen.ru" in current_url, \
-                f"Ожидался переход на Дзен, но текущий URL: {current_url}"
+            assert main_page.is_dzen_page_loaded(), \
+                f"Ожидался переход на Дзен, но текущий URL: {main_page.get_current_url()}"
         
         with allure.step("Закрыть новое окно и вернуться к основному"):
             main_page.driver.close()

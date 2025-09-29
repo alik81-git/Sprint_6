@@ -1,9 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-
-# Глобальная переменная с базовым URL
-BASE_URL = "https://qa-scooter.praktikum-services.ru/"
+from config import BASE_URL
 
 class BasePage:
     def __init__(self, driver):

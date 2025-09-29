@@ -27,7 +27,7 @@ class OrderPage(BasePage):
         super().__init__(driver)
     
     def fill_personal_info(self, name, surname, address, metro_station, phone):
-        """Заполнить первую страницу формы заказа"""
+        #Заполнить первую страницу формы заказа
         self.input_text(self.NAME_INPUT, name)
         self.input_text(self.SURNAME_INPUT, surname)
         self.input_text(self.ADDRESS_INPUT, address)
@@ -43,11 +43,11 @@ class OrderPage(BasePage):
         self.input_text(self.PHONE_INPUT, phone)
     
     def click_next_button(self):
-        """Клик на кнопку 'Далее'"""
+        #Клик на кнопку 'Далее'
         self.click_element(self.NEXT_BUTTON)
     
     def fill_rental_info(self, date, rental_period, color, comment):
-        """Заполнить вторую страницу формы заказа"""
+        #Заполнить вторую страницу формы заказа
         self.input_text(self.DATE_INPUT, date)
         
         # Выбор срока аренды
@@ -67,20 +67,20 @@ class OrderPage(BasePage):
             self.input_text(self.COMMENT_INPUT, comment)
     
     def click_order_button(self):
-        """Клик на кнопку 'Заказать'"""
+        #Клик на кнопку 'Заказать'
         self.click_element(self.ORDER_BUTTON)
     
     def confirm_order(self):
-        """Подтвердить заказ"""
+        #Подтвердить заказ
         self.click_element(self.CONFIRM_ORDER_BUTTON)
     
     def is_success_message_displayed(self):
-        """Проверить, отображается ли сообщение об успешном заказе"""
+        #Проверить, отображается ли сообщение об успешном заказе
         try:
             return self.find_element(self.SUCCESS_MESSAGE, time=5).is_displayed()
         except:
             return False
     
     def get_success_message_text(self):
-        """Получить текст сообщения об успехе"""
+        #Получить текст сообщения об успехе
         return self.find_element(self.SUCCESS_MESSAGE).text

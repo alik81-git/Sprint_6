@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from .base_page import BasePage
 
 class MainPage(BasePage):
@@ -79,3 +80,23 @@ class MainPage(BasePage):
     def scroll_to_bottom_order_button(self):
         #Прокрутить к нижней кнопке заказа
         self.scroll_to_element(self.ORDER_BUTTON_BOTTOM)
+    
+    def is_main_page_loaded(self):
+        #Проверить, что загружена главная страница
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda driver: self.base_url in driver.current_url
+            )
+            return True
+        except:
+            return False
+    
+    def is_dzen_page_loaded(self):
+        #Проверить, что загружена страница Дзен
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda driver: "dzen.ru" in driver.current_url
+            )
+            return True
+        except:
+            return False
